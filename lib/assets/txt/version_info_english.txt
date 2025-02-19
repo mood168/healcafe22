@@ -1,0 +1,26 @@
+Version update information
+    Features added:
+        2024.12.27
+        1. Add the switch of showing remain alert
+    
+        2024.12.26
+        1. Fix the error of pouring fail
+        2. Fix the error of router status error
+        3. Fix the error of formula string empty
+        4. Fix the error of cancel button
+
+
+        2024.12.25
+        1. Add new version heal cafe page
+        2. Add the function of all page
+
+        2024.12.26
+        1. Fix the error of pouring fail
+        2. Fix the error of router status error
+        3. Fix the error of formula string empty
+        4. Fix the error of cancel button
+
+        
+    Bug fixes:
+        2024.12.27
+        1. Fix the error of showing remain alert

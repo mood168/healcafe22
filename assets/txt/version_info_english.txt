@@ -1,0 +1,49 @@
+Version update information
+    Features added:
+        2024.09.13
+        1. Fix dashboard transation records for order by created DESC
+
+        2024.08.25
+        1. Add Data Each one Export to Excel
+           File in Documents Path '/db'
+        2. Fix the Dashboard Data add Input 
+           Date Range to Select Data
+
+        2024.08.05
+        1. Fix the Product Data Excel Import 
+           File Column(delete Unused columns)
+        2. Fix the Product Data add Input 
+           Page and Edit Input Page
+        3. Fix the Cup Gif Animation
+
+        2024.07.05
+        1. Fix the home page layout
+        2. Add Thanks Page
+        3. Increase the size of the 
+           cup animation
+        4. Size and size position 
+           adjustment
+        5. Back icon modification
+        
+        2024.06.15
+        Stable offline version
+        1. Add correction parameter setting
+           for material measurement and 
+           convert it to milliliters
+        2. Update the clock board's TAB1 
+           and TAB2 and add material usage
+           management
+        3. Add the functionality of 
+           repeatedly cleaning the shop 
+           during opening and closing
+        4. Provide the function of supplying 
+           materials after running out and 
+           continuing or removing related 
+           products
+        5. Change material management to 
+           material alert
+        6. Add database fields to 
+           accommodate modification 
+           requirements
+
+    Bug fixes:
