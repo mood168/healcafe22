@@ -84,14 +84,11 @@ class _HotColdPageState extends State<HotColdPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            color: healRed,
-            child: Image.file(
-              File('$documentsPath/images/${productName}_hotcold.png'),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              fit: BoxFit.fill,
-            ),
+          Image.file(
+            File('$documentsPath/images/${productName}_hotcold.png'),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            fit: BoxFit.fill,
           ),
           Positioned(
             top: 10,

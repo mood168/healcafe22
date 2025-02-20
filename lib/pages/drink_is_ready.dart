@@ -26,32 +26,21 @@ class _DrinkIsReadyState extends State<DrinkIsReady> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 40),
-              Container(
-                decoration: BoxDecoration(
-                  color: healGreyPicBg,
-                  border: Border.all(
-                    color: healDarkGrey,
-                    width: 5,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.file(
+                    File('$documentsPath/images/coffeeready.png'),
+                    width: 600,
+                    fit: BoxFit.fitWidth,
                   ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.file(
-                      File('$documentsPath/images/coffeeready.png'),
-                      height: 180,
-                      fit: BoxFit.fitHeight,
-                    ),
-                    const SizedBox(height: 20),
-                    Image.file(
-                      File('$documentsPath/images/enjoy.png'),
-                      height: 80,
-                      fit: BoxFit.fitHeight,
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
+                  Image.file(
+                    File('$documentsPath/images/enjoy.png'),
+                    width: 600,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
               const Text('Your cup is ready ', style: TextStyle(color: healDarkGrey, fontSize: 28)),

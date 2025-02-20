@@ -109,7 +109,7 @@ class _MakeDrinkPageState extends State<MakeDrinkPage> with SingleTickerProvider
       ).timeout(
         const Duration(seconds: 5),
         onTimeout: () {
-          throw TimeoutException('請求超時，請檢查網絡連接');
+          throw TimeoutException('Request timeout, please check network connection');
         },
       );
 
@@ -119,14 +119,14 @@ class _MakeDrinkPageState extends State<MakeDrinkPage> with SingleTickerProvider
         throw HttpException('HTTP錯誤：${response.statusCode}');
       }
     } on SocketException catch (e) {
-      debugPrint('網絡連接錯誤：$e');
-      throw '網絡連接失敗，請檢查網絡設置和設備IP地址';
+      debugPrint('Network connection error: $e');
+      throw 'Network connection failed, please check network settings and device IP address';
     } on TimeoutException catch (e) {
       debugPrint('請求超時：$e');
-      throw '請求超時，請檢查網絡連接';
+      throw 'Request timeout, please check network connection';
     } catch (e) {
       debugPrint('其他錯誤：$e');
-      throw '發生錯誤：$e';
+      throw 'An error occurred: $e';
     }
   }
 
@@ -1117,9 +1117,9 @@ class _MakeDrinkPageState extends State<MakeDrinkPage> with SingleTickerProvider
                   color: Colors.red,
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  showEnglish ? 'Failed' : '製作失敗',
-                  style: const TextStyle(
+                const Text(
+                  'Failed',
+                  style: TextStyle(
                     fontSize: 44.0,
                     color: healDarkGrey,
                     fontWeight: FontWeight.bold,
@@ -1131,9 +1131,9 @@ class _MakeDrinkPageState extends State<MakeDrinkPage> with SingleTickerProvider
                   alignment: Alignment.center,
                   width: 400,
                   height: 280.0,
-                  child: Text(
-                    showEnglish ? 'Formula data is empty, please select a drink again' : '配方資料為空，請重新選擇飲品',
-                    style: const TextStyle(
+                  child: const Text(
+                    'Formula data is empty, please select a drink again',
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Arial',
                       fontSize: 40.0,
@@ -1193,7 +1193,7 @@ class _MakeDrinkPageState extends State<MakeDrinkPage> with SingleTickerProvider
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  '製作失敗',
+                  'Making Failed',
                   style: TextStyle(
                     fontSize: 44.0,
                     color: healDarkGrey,
@@ -1207,7 +1207,7 @@ class _MakeDrinkPageState extends State<MakeDrinkPage> with SingleTickerProvider
                   width: 400,
                   height: 280.0,
                   child: const Text(
-                    '配方格式錯誤，請重新選擇飲品',
+                    'Formula format error, please select a drink again',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Arial',
@@ -1284,26 +1284,13 @@ class _MakeDrinkPageState extends State<MakeDrinkPage> with SingleTickerProvider
                 animation: _animation,
                 builder: (context, child) {
                   return Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: healDarkGrey.withOpacity(0.6 + (_animation.value - 2.5) / 10),
-                        width: _animation.value * 1.5,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: healDarkGrey.withOpacity(0.2),
-                          blurRadius: _animation.value * 1.5,
-                          spreadRadius: _animation.value / 3,
-                        ),
-                      ],
-                    ),
                     child: child,
                   );
                 },
                 child: Image.file(
                   File('$documentsPath/images/healing.gif'),
-                  height: 180,
-                  fit: BoxFit.fitHeight,
+                  width: 600,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
               const SizedBox(height: 20),

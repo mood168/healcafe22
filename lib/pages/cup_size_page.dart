@@ -61,14 +61,11 @@ class _CupSizePageState extends State<CupSizePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            color: healRed,
-            child: Image.file(
-              File('$documentsPath/images/${productName}_twosize.png'),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              fit: BoxFit.fitHeight,
-            ),
+          Image.file(
+            File('$documentsPath/images/${productName}_twosize.png'),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            fit: BoxFit.fill,
           ),
           Positioned(
             top: 10,

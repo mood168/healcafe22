@@ -51,7 +51,7 @@ class AllConstants {
   var systemPassWord = '0000';
   static var robotUse = false;
   var routerIP = '192.168.66.77';
-  var softVersion = 'V3_HealCafe22_202502001';
+  var softVersion = 'V3_HealCafe22_202502003';
   static var showPrice = true;
   static var showEnglish = true;
   static var isDrinkMade = false;

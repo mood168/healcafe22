@@ -556,7 +556,7 @@ class _DataImportState extends State<DataImport> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    showEnglish ? 'Please make sure all files are placed in Documents/hjeen/xlsx/' : '請確定所有導入檔案都是正確的放置在 Documents 目錄中的 hjeen/xlsx/ 文件夾中',
+                    showEnglish ? 'Please make sure all files are placed in Documents/healcafe22/xlsx/' : '請確定所有導入檔案都是正確的放置在 Documents 目錄中的 healcafe22/xlsx/ 文件夾中',
                     style: const TextStyle(color: healLightGrey, fontSize: 24),
                   ),
                   const SizedBox(height: 50),
@@ -983,7 +983,7 @@ class _DataImportState extends State<DataImport> {
                                   alignment: Alignment.center,
                                   // color: healDarkGrey,
                                   child: Text(
-                                    showEnglish ? 'File does not exist, please place it in Documents/hjeen/xlsx/' : '檔案不存在, 請先放置檔案再重試',
+                                    showEnglish ? 'File does not exist, please place it in Documents/healcafe22/xlsx/' : '檔案不存在, 請先放置檔案再重試',
                                     style: const TextStyle(fontSize: 24.0, color: colorWhite80),
                                   ),
                                 ),
@@ -1683,7 +1683,7 @@ class _DataImportState extends State<DataImport> {
                                   alignment: Alignment.center,
                                   // color: healDarkGrey,
                                   child: Text(
-                                    showEnglish ? 'File does not exist, please place it in Documents/hjeen/xlsx/' : '檔案不存在, 請先放置檔案再重試',
+                                    showEnglish ? 'File does not exist, please place it in Documents/healcafe22/xlsx/' : '檔案不存在, 請先放置檔案再重試',
                                     style: const TextStyle(fontSize: 24.0, color: colorWhite80),
                                   ),
                                 ),
@@ -2625,7 +2625,7 @@ class _DataImportState extends State<DataImport> {
                                   alignment: Alignment.center,
                                   // color: healDarkGrey,
                                   child: Text(
-                                    showEnglish ? 'File does not exist, please place it in Documents/hjeen/xlsx/' : '檔案不存在, 請先放置檔案再重試',
+                                    showEnglish ? 'File does not exist, please place it in Documents/healcafe22/xlsx/' : '檔案不存在, 請先放置檔案再重試',
                                     style: const TextStyle(fontSize: 24.0, color: colorWhite80),
                                   ),
                                 ),
@@ -3284,7 +3284,7 @@ class _DataImportState extends State<DataImport> {
                                   alignment: Alignment.center,
                                   // color: healDarkGrey,
                                   child: Text(
-                                    showEnglish ? 'File does not exist, please place it in Documents/hjeen/xlsx/' : '檔案不存在, 請先放置檔案再重試',
+                                    showEnglish ? 'File does not exist, please place it in Documents/healcafe22/xlsx/' : '檔案不存在, 請先放置檔案再重試',
                                     style: const TextStyle(fontSize: 24.0, color: colorWhite80),
                                   ),
                                 ),
@@ -3602,7 +3602,7 @@ class _DataImportState extends State<DataImport> {
                                   alignment: Alignment.center,
                                   // color: healDarkGrey,
                                   child: Text(
-                                    showEnglish ? 'File does not exist, please place it in Documents/hjeen/xlsx/' : '檔案不存在, 請先放置檔案再重試',
+                                    showEnglish ? 'File does not exist, please place it in Documents/healcafe22/xlsx/' : '檔案不存在, 請先放置檔案再重試',
                                     style: const TextStyle(fontSize: 24.0, color: colorWhite80),
                                   ),
                                 ),
