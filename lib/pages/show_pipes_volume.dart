@@ -86,7 +86,7 @@ class _ShowPipesVolumeState extends State<ShowPipesVolume> {
           firstNoticeController.text = prefs.getString('M$pipeUseId${fieldName}FirstNoticeGram') ?? '800';
           lastNoticeController.text = prefs.getString('M$pipeUseId${fieldName}LastNoticeGram') ?? '500';
         } else {
-          controller.text = prefs.getString('M$pipeUseId${fieldName}Gram') ?? '5000';
+          controller.text = prefs.getString('M$pipeUseId${fieldName}Gram') ?? '10000';
           firstNoticeController.text = prefs.getString('M$pipeUseId${fieldName}FirstNoticeGram') ?? '800';
           lastNoticeController.text = prefs.getString('M$pipeUseId${fieldName}LastNoticeGram') ?? '500';
         }
@@ -165,33 +165,35 @@ class _ShowPipesVolumeState extends State<ShowPipesVolume> {
       fieldNames.add(pipeContent.keys.first);
     }
     debugPrint('fieldNames: $fieldNames');
+
     if (mounted) {
       if (fieldNames.isNotEmpty) {
+        // 清空現有的 sums 列表
+        sums.clear();
+
         for (var fieldName in fieldNames) {
           String key = 'M$pipeUseId${fieldName}ResetDateTime';
           String? value = prefs.getString(key);
           String setDate = value ?? '2099-01-01 00-00';
           debugPrint('fieldName: $fieldName ,setDate: $setDate');
 
-          await getTotalSum(fieldName, setDate).then((value) {
-            if (mounted) {
-              setState(() {
-                sums.add({fieldName: value});
-              });
-            }
-          });
-        }
-        if (sums.isNotEmpty) {
+          final sum = await getTotalSum(fieldName, setDate);
           if (mounted) {
             setState(() {
-              sums.sort((a, b) {
-                int indexA = fieldNames.indexOf(a.keys.first);
-                int indexB = fieldNames.indexOf(b.keys.first);
-                return indexA.compareTo(indexB);
-              });
-              debugPrint('sums: $sums');
+              sums.add({fieldName: sum});
             });
           }
+        }
+
+        if (sums.isNotEmpty && mounted) {
+          setState(() {
+            sums.sort((a, b) {
+              int indexA = fieldNames.indexOf(a.keys.first);
+              int indexB = fieldNames.indexOf(b.keys.first);
+              return indexA.compareTo(indexB);
+            });
+            debugPrint('sums: $sums');
+          });
         }
       }
     }
@@ -200,16 +202,19 @@ class _ShowPipesVolumeState extends State<ShowPipesVolume> {
   Future<num> getTotalSum(String fieldName, String setDate) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     pipeUseId = prefs.getString('pipeUseId') ?? '';
-    List<Map<String, dynamic>> snapshot = await DatabaseHelper().getAllRecords();
+    // 只獲取重置時間之後的記錄
+    List<Map<String, dynamic>> snapshot = await DatabaseHelper().getAllRecordsStart(setDate);
     num totalSum = 0;
     if (snapshot.isNotEmpty) {
       for (var doc in snapshot) {
         String correctWeightFieldName = fieldName.replaceAll('g', 'correctWeight');
-        if (doc.containsKey(correctWeightFieldName)) {
+        // 確保記錄時間在重置時間之後
+        if (doc.containsKey(correctWeightFieldName) && doc['createdDateTime'].toString().compareTo(setDate) > 0) {
           totalSum += doc[correctWeightFieldName];
         }
       }
     }
+    debugPrint('fieldName: $fieldName, setDate: $setDate, totalSum: $totalSum');
     return totalSum;
   }
 
@@ -599,39 +604,55 @@ class _ShowPipesVolumeState extends State<ShowPipesVolume> {
                                                                       for (Map<String, dynamic> pipeContent in pipeName) {
                                                                         fieldNames.add(pipeContent.keys.first);
                                                                       }
+
+                                                                      // 保存新的設置
+                                                                      String currentDateTime = DateTime.now().toString();
                                                                       prefs.setString('M$pipeUseId${fieldNames[index]}Gram', textControllers[index].text);
                                                                       prefs.setString('M$pipeUseId${fieldNames[index]}FirstNoticeGram', firstNoticeControllers[index].text);
                                                                       prefs.setString('M$pipeUseId${fieldNames[index]}LastNoticeGram', lastNoticeControllers[index].text);
-                                                                      prefs.setString('M$pipeUseId${fieldNames[index]}ResetDateTime', DateTime.now().toString());
-                                                                      getEachSum(pipeName);
-                                                                      debugPrint('M$pipeUseId${fieldNames[index]}ResetDateTime');
+                                                                      prefs.setString('M$pipeUseId${fieldNames[index]}ResetDateTime', currentDateTime);
+
+                                                                      // 清空 sums 列表以避免數據重複
+                                                                      if (mounted) {
+                                                                        setState(() {
+                                                                          sums.clear();
+                                                                        });
+                                                                      }
+
+                                                                      // 重新獲取所有數據
+                                                                      await getEachSum(pipeName);
+
+                                                                      // 重新獲取重置時間
+                                                                      final updatedDateTimes = await getGPipeResetDateTimes();
+                                                                      if (mounted) {
+                                                                        setState(() {
+                                                                          gPipeResetDateTimes = updatedDateTimes;
+                                                                          // 立即更新當前項目的顯示
+                                                                          String key = 'M$pipeUseId${fieldNames[index]}ResetDateTime';
+                                                                          gPipeResetDateTimes[key] = currentDateTime;
+                                                                        });
+                                                                      }
+
+                                                                      debugPrint('Reset completed for M$pipeUseId${fieldNames[index]}ResetDateTime');
 
                                                                       ScaffoldMessenger.of(context).showSnackBar(
                                                                         SnackBar(
                                                                           content: Container(
-                                                                            height: 80.0, // 設置高度
+                                                                            height: 80.0,
                                                                             alignment: Alignment.center,
-                                                                            // color: healDarkGrey,
                                                                             child: Text(
                                                                               showEnglish ? 'Pipe Volume System are Modified, Restart it' : '更改完成, 請重新開啟 原料管理 系統',
                                                                               style: const TextStyle(fontSize: 24.0, color: colorWhite80),
                                                                             ),
                                                                           ),
-                                                                          behavior: SnackBarBehavior.floating, // 可選：使 SnackBar 浮動
+                                                                          behavior: SnackBarBehavior.floating,
                                                                           shape: RoundedRectangleBorder(
-                                                                            borderRadius: BorderRadius.circular(10.0), // 可選：設置圓角
+                                                                            borderRadius: BorderRadius.circular(10.0),
                                                                           ),
                                                                           backgroundColor: healDarkGrey,
                                                                         ),
                                                                       );
                                                                       Navigator.of(context).pop();
-                                                                      // getEachSum(); // 第一次關閉小對話框
-                                                                      // Navigator.of(context).pop(); // 第2次關閉主對話框
-                                                                      if (mounted) {
-                                                                        setState(() {
-                                                                          gValue = gPipeResetDateTimes[fieldNames[index]];
-                                                                        });
-                                                                      }
                                                                     },
                                                                   ),
                                                                 ],
